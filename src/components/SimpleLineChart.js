@@ -10,7 +10,7 @@ import { withTheme } from '@material-ui/core/styles';
 const URL = "http://localhost:5000/weights/optimize"
 
 const data = [
-
+    
 ]
 
 function SimpleLineChart(props) {
