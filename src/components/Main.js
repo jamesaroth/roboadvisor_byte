@@ -8,8 +8,10 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import InstructionDialog from './dialogs/InstructionDialog';
 import SwipeDialog from './dialogs/SwipeDialog';
-import SimpleTable from './SimpleTable'
+import SimpleLineChart from './charts/SimpleLineChart';
+import SimpleTable from './charts/SimpleTable'
 import Topbar from './Topbar';
+
 
 const backgroundShape = require('../images/shape.svg');
 
@@ -24,6 +26,7 @@ const styles = theme => ({
     paddingBottom: 200
   },
   grid: {
+    padding: theme.spacing.unit * 3,
     width: 1200,
     marginTop: 40,
     [theme.breakpoints.down('sm')]: {
@@ -94,7 +97,8 @@ class Main extends Component {
 
   state = {
     learnMoredialog: false,
-    getStartedDialog: false
+    getStartedDialog: false,
+    tableData: [],
   };
 
   componentDidMount() {}
@@ -117,6 +121,7 @@ class Main extends Component {
 
   render() {
     const { classes } = this.props;
+    const { tableData } = this.state
     return (
       <React.Fragment>
         <CssBaseline />
@@ -183,13 +188,14 @@ class Main extends Component {
                     <Paper className={classes.paper}>
                       <div>
                         <div className={classes.box}>
-                          {/* <SimpleTable/> */}
-                          {/* <Typography color='secondary' gutterBottom>
+                          
+                          <SimpleTable rows={tableData}/>
+                          <Typography color='secondary' gutterBottom>
                             Full box
                           </Typography>
                           <Typography variant="body1" gutterBottom>
                             This is an example of a full-width box
-                          </Typography> */}
+                          </Typography> 
                         </div>
                         <div className={classes.alignRight}>
                           <Button color='primary' variant="contained" className={classes.actionButtom}>

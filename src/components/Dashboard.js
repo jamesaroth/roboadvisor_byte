@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/lab/Slider';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
-import SimpleBarChart from './SimpleBarChart';
+import SimpleBarChart from './charts/SimpleBarChart';
 import Months from './common/Months';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import Loading from './common/Loading';
@@ -164,6 +164,7 @@ class Dashboard extends Component {
   }
 
   render() {
+    console.log(this.props)
     const { classes } = this.props;
     const { amount, period, start, monthlyPayment,
       monthlyInterest, data, loading } = this.state;
