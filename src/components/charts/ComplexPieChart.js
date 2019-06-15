@@ -53,7 +53,7 @@ class ComplexPieChart extends Component {
   constructor(props) {
   super(props)
   this.state = {
-    activeIndex: null,
+    activeIndex: 0,
     activeShape: null,
   };
 }
@@ -76,7 +76,7 @@ class ComplexPieChart extends Component {
     const { activeIndex, activeShape } = this.state;
     
     return (
-      <ResponsiveContainer width="99%" height={400}>
+      <ResponsiveContainer width="99%" height={220}>
       <PieChart>
         <Pie
           activeIndex={activeIndex}

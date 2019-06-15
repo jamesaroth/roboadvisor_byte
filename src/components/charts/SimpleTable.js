@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 650,
+    minWidth: 300,
   },
 }))
 
@@ -36,14 +36,16 @@ function SimpleTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
+          {rows.map(row => 
+             (
             <TableRow key={row.ticker}>
               <TableCell component="th" scope="row">
                 {row.ticker}
               </TableCell>
-              <TableCell align="right">{numeral(row.weight).format('0.0%')}</TableCell>
-            </TableRow>
-          ))}
+              <TableCell key={row.weight} align="right">{numeral(row.weight).format('0.0%')}</TableCell>
+            </TableRow> 
+             ))}
+             
         </TableBody>
       </Table>
     </Paper>

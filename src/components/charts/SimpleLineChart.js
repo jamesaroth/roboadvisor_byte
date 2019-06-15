@@ -7,7 +7,7 @@ function SimpleLineChart(props) {
   const { theme, data } = props;
 
   return (          
-  <ResponsiveContainer width="99%" height={225}>
+  <ResponsiveContainer width="99%" height={300}>
   <LineChart data={data}
   margin={{ top: 10, right: 30, left: 20, bottom: 5 }}>
   <CartesianGrid strokeDasharray="3 3" />

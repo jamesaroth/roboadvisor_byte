@@ -15,6 +15,7 @@ import Topbar from './Topbar';
 import SimpleTable from './charts/SimpleTable';
 import ComplexPieChart from './charts/ComplexPieChart';
 import moment from 'moment';
+import SimpleLineChart from './charts/SimpleLineChart';
 
 const numeral = require('numeral');
 numeral.defaultFormat('0,000');
@@ -109,7 +110,7 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 4
   },
   charts: {
-    textAlign: 'center'
+    justifyContent: 'center'
   }
 });
 
@@ -121,17 +122,11 @@ class Dashboard_update extends Component {
   state = {
     loading: true,
     amount: 5,
-    // period: 3,
-    // start: 0,
-    // monthlyInterest: 0,
-    // totalInterest: 0,
-    // monthlyPayment: 0,
-    // totalPayment: 0,
     data: [],
     holdings: [],
   };
 
-  updateTableValues() {
+  async updateTableValues() {
     const { amount } = this.state;
     let params = {'vol': Number(amount)}
     const promise = fetch(endpoint, {
@@ -141,12 +136,11 @@ class Dashboard_update extends Component {
         method: 'post'
     });
     
-    promise.then(blob=>blob.json())
-    .then(json => this.setState({holdings: json[0].allocations}))
+    await promise.then(blob=>blob.json()).then(json => this.setState({holdings: json[0].allocations}))
   }
 
-  updateChartValues() {
-    fetch(chart_endpoint).then(blob => blob.json()).then(json => {
+  async updateChartValues() {
+      await fetch(chart_endpoint).then(blob => blob.json()).then(json => {
       this.setState({data: json})
     })
   }
@@ -161,6 +155,24 @@ class Dashboard_update extends Component {
     return copy
   }
 
+  reformatTable = (data) => {
+      const copy = data
+        for (let i in copy) {
+            for (let key in copy[i]) {
+                if ((copy[i][key] < 0.01)) {
+                    copy.splice(i,1)
+                }
+            }
+        }
+        console.log(copy)
+      return copy
+  }
+
+  // componentDidUpdate() {
+  //   this.updateTableValues();
+  //   this.updateChartValues(); 
+  // }
+  
   componentDidMount() {
     this.updateTableValues();
     this.updateChartValues(); 
@@ -176,7 +188,10 @@ class Dashboard_update extends Component {
     const { amount, data, holdings, loading } = this.state;
     const currentPath = this.props.location.pathname
     let dataFormatted = []
+    let tableFormatted = []
+
     dataFormatted = this.reformatData(data)
+    tableFormatted = this.reformatTable(holdings)
 
     return (
       <React.Fragment>
@@ -202,6 +217,9 @@ class Dashboard_update extends Component {
               </Grid>
               <Grid item xs={12} md={4}>
                 <Paper className={classes.paper}>
+                    <Typography style={{textTransform: 'uppercase'}} color='secondary' gutterBottom>
+                      Risk Tolerance
+                    </Typography>
                   <div>
                     <Typography variant="subtitle1" gutterBottom>
                       How would you rate your level risk tolerance?
@@ -238,7 +256,7 @@ class Dashboard_update extends Component {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12} md={4} justifyContent="center">
                 <Paper className={classes.paper} style={{position: 'relative'}}>
                 <div className={classes.box}>
                     <Typography style={{textTransform: 'uppercase'}} color='secondary' gutterBottom>
@@ -253,15 +271,16 @@ class Dashboard_update extends Component {
                       
                       <Loading loading={loading} />
                       <div className={loading ? classes.loadingState : ''}>
-                {/* <div className={classes.blockCenter}> */}
+                      
+                <div className={classes.charts}>
                     <ComplexPieChart data={holdings}/>
-                    {/* </div> */}
+                    
+                    </div>
                     </div>
                     </div>
                 </Paper>
               </Grid> 
-              <Grid container spacing={24} justify="center">
-                <Grid item xs={12}>
+              <Grid item xs={12} md={4}>
                   <Paper className={classes.paper} style={{position: 'relative'}}>
                   <Typography style={{textTransform: 'uppercase'}} color='secondary' gutterBottom>
                       Portfolio Allocation
@@ -271,7 +290,23 @@ class Dashboard_update extends Component {
                       
                       <Loading loading={loading} />
                       <div className={loading ? classes.loadingState : ''}>
-                        <SimpleTable rows={holdings} />
+                        <SimpleTable rows={tableFormatted} />
+                      </div>
+                    </div>
+                  </Paper>
+              </Grid>
+              <Grid container spacing={24} justify="center">
+                <Grid item xs={12}>
+                  <Paper className={classes.paper} style={{position: 'relative'}}>
+                  <Typography style={{textTransform: 'uppercase'}} color='secondary' gutterBottom>
+                      Portfolio Historical Performance
+                    </Typography>
+                    <Loading loading={loading} />
+                    <div className={loading ? classes.loadingState : ''}>
+                      
+                      <Loading loading={loading} />
+                      <div className={loading ? classes.loadingState : ''}>
+                        <SimpleLineChart data={dataFormatted} />
                       </div>
                     </div>
                   </Paper>
