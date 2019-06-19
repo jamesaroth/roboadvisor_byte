@@ -82,10 +82,14 @@ class ComplexPieChart extends Component {
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
           data={data}
-          cx={200}
-          cy={200}
-          innerRadius={60}
-          outerRadius={80}
+          cx="50%"
+          cy="50%"
+          innerRadius="50%"
+          outerRadius="60%"
+          // cx={200}
+          // cy={200}
+          // innerRadius={60}
+          // outerRadius={80}
           fill={theme.palette.primary.main}
           // "#8884d8"
           dataKey="weight"

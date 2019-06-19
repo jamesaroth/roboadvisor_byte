@@ -5,8 +5,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 const styles = theme => ({
   loadingMessage: {
     position: 'absolute',
-    top: '40%',
-    left: '40%'
+    top: '50%',
+    left: '50%'
   }
 });
 

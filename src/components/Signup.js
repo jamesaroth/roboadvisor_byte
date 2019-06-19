@@ -42,7 +42,7 @@ const styles = theme => ({
     paddingBottom: 500
   },
   grid: {
-    margin: `0 ${theme.spacing.unit * 2}px`
+    margin: `0 ${theme.spacing(2)}px`
   },
   smallContainer: {
     width: '60%'
@@ -82,7 +82,7 @@ const styles = theme => ({
     backgroundColor: 'transparent'
   },
   paper: {
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     textAlign: 'left',
     color: theme.palette.text.secondary
   },
@@ -96,7 +96,7 @@ const styles = theme => ({
     width: '100%'
   },
   selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   }
 })
 

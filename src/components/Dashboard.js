@@ -32,7 +32,7 @@ const styles = theme => ({
   },
   grid: {
     width: 1200,
-    margin: `0 ${theme.spacing.unit * 2}px`,
+    margin: `0 ${theme.spacing(2)}px`,
     [theme.breakpoints.down('sm')]: {
       width: 'calc(100% - 20px)'
     }
@@ -41,14 +41,14 @@ const styles = theme => ({
     opacity: 0.05
   },
   paper: {
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     textAlign: 'left',
     color: theme.palette.text.secondary
   },
   rangeLabel: {
     display: 'flex',
     justifyContent: 'space-between',
-    paddingTop: theme.spacing.unit * 2
+    paddingTop: theme.spacing(2)
   },
   topBar: {
     display: 'flex',
@@ -66,11 +66,11 @@ const styles = theme => ({
     height: 36
   },
   blockCenter: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: 'center'
   },
   block: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   loanAvatar: {
     display: 'inline-block',
@@ -104,8 +104,8 @@ const styles = theme => ({
   },
   mainBadge: {
     textAlign: 'center',
-    marginTop: theme.spacing.unit * 4,
-    marginBottom: theme.spacing.unit * 4
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4)
   }
 });
 

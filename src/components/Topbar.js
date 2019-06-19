@@ -133,7 +133,7 @@ class Topbar extends Component {
                     <Typography variant="h6" color="inherit" noWrap>
                       <Link to='/' className={classes.link}>
                         <img width={20} src={logo} alt="" />
-                        <span className={classes.tagline}>Material Invest</span>
+                        <span className={classes.tagline}>Byte Invest</span>
                       </Link>
                     </Typography>
                   </div>
@@ -141,7 +141,7 @@ class Topbar extends Component {
                     <React.Fragment>
                       <div className={classes.productLogo}>
                         <Typography>
-                          A roboadvisor for owners of single stock
+                          Byte's First RoboAdvisor
                         </Typography>
                       </div>
                       <div className={classes.iconContainer}>

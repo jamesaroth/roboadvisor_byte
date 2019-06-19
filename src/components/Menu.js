@@ -1,24 +1,24 @@
 const Menu = [
   {
-    label: "Home",
+    label: "General Portfolio",
     pathname: "/"
   },
   {
-    label: "Dashboard",
+    label: "Portfolio with Single Stock",
     pathname: "/dashboard"
   },
-  {
-    label: "Signup",
-    pathname: "/signup"
-  },
-  {
-    label: "Wizard",
-    pathname: "/wizard"
-  },
-  {
-    label: "Cards",
-    pathname: "/cards"
-  }
+  // {
+  //   label: "Signup",
+  //   pathname: "/signup"
+  // },
+  // {
+  //   label: "Wizard",
+  //   pathname: "/wizard"
+  // },
+  // {
+  //   label: "Cards",
+  //   pathname: "/cards"
+  // }
 
 ];
 

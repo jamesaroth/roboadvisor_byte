@@ -26,7 +26,7 @@ const styles = theme => ({
     paddingBottom: 200
   },
   grid: {
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     width: 1200,
     marginTop: 40,
     [theme.breakpoints.down('sm')]: {
@@ -34,14 +34,14 @@ const styles = theme => ({
     }
   },
   paper: {
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     textAlign: 'left',
     color: theme.palette.text.secondary,
   },
   rangeLabel: {
     display: 'flex',
     justifyContent: 'space-between',
-    paddingTop: theme.spacing.unit * 2
+    paddingTop: theme.spacing(2)
   },
   topBar: {
     display: 'flex',
@@ -59,11 +59,11 @@ const styles = theme => ({
     width: 152
   },
   blockCenter: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: 'center'
   },
   block: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   box: {
     marginBottom: 40,

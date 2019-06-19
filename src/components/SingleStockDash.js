@@ -15,6 +15,7 @@ import ComplexPieChart from './charts/ComplexPieChart';
 import moment from 'moment';
 import SimpleLineChart from './charts/SimpleLineChart';
 import { CircularProgress } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField'
 
 const numeral = require('numeral');
 numeral.defaultFormat('0,000');
@@ -49,7 +50,6 @@ const styles = theme => ({
     color: theme.palette.text.secondary,
     margin: theme.spacing(.25),
     flexGrow: 1,
-    
 
 
   },
@@ -114,6 +114,14 @@ const styles = theme => ({
     textAlign: 'center',
     marginTop: theme.spacing(4),
     marginBottom: theme.spacing(4)
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
   }
 });
 
@@ -130,6 +138,9 @@ class Dashboard_update extends Component {
     amount: 5,
     data: [],
     holdings: [],
+    StockTicker: "",
+    ShareAmt: "",
+    Date: "",
   };
 
   async updateTableValues() {
@@ -174,19 +185,28 @@ class Dashboard_update extends Component {
       return copy
   }
 
+  handleTextFieldChange = (event) => {
+    this.setState({[event.target.id]: event.target.value });
+    console.log(this.state.StockTicker)
+  };
+
   // componentDidUpdate() {
   //   this.updateTableValues();
   //   this.updateChartValues(); 
   // }
   
-  componentDidMount() {
-    this.updateTableValues();
-    this.updateChartValues(); 
+  componentDidUpdate() {
+    
   }
 
   handleChangeAmount = (event, value) => {
     this.setState({amount: value, refresh_chart: true, refresh_weight: true});
+  }
+
+  handleSubmit = (event) => {
+    this.updateChartValues();
     this.updateTableValues();
+    
   }
 
   render() {
@@ -195,10 +215,9 @@ class Dashboard_update extends Component {
     const currentPath = this.props.location.pathname
     let dataFormatted = []
     let tableFormatted = []
-
     dataFormatted = this.reformatData(data)
     tableFormatted = this.reformatTable(holdings)
-    console.log(this.state.data)
+
     return (
       <React.Fragment>
         <CssBaseline />
@@ -206,21 +225,16 @@ class Dashboard_update extends Component {
         <div className={classes.root}>
           <Grid container justify="center" flexGrow="1">
             <Grid spacing={24} alignItems="center" justify="center" container className={classes.grid}>
-              {/* <Grid item xs={12}>
+              <Grid item xs={12}>
                 <div className={classes.topBar}>
                   <div className={classes.block}>
-                    <Typography variant="h6" gutterBottom>Dashboard_update</Typography>
+                    <Typography variant="h6" gutterBottom>Most Stockowners are concentrated in the shares of their employer</Typography>
                     <Typography variant="body1">
-                      Adjust and play with our sliders.
+                      Input your current stock holdings and your desired risk tolerance for a customized portfolio
                     </Typography>
                   </div>
-                  <div>
-                    <Button variant="outlined" className={classes.outlinedButtom}>
-                      Get help
-                    </Button>
-                  </div>
                 </div>
-              </Grid> */}
+              </Grid>
               <Grid container alignItems="stretch" height="100%">
               <Grid item xs={12} md={4}>
                 <Paper className={classes.paper}>
@@ -264,6 +278,51 @@ class Dashboard_update extends Component {
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4}>
+                  <Paper className={classes.paper} style={{position: 'relative'}}>
+                  <Typography style={{textTransform: 'uppercase'}} color='secondary' gutterBottom>
+                      Personal Holdings
+                    </Typography>
+                    <form className={classes.container} noValidate autoComplete="off">
+                        <TextField
+                          id="StockTicker"
+                          label="Enter Stock Ticker"
+                          className={classes.textField}
+                          value={this.state.StockTicker}
+                          onChange={this.handleTextFieldChange}
+                          margin="normal"
+                          variant="outlined"
+                        />
+                        <TextField
+                          id="ShareAmt"
+                          label="Number of Shares"
+                          className={classes.textField}
+                          value={this.state.ShareAmt}
+                          onChange={this.handleTextFieldChange}
+                          margin="normal"
+                          variant="outlined"
+                        />
+                        <TextField
+                          id="Date"
+                          label="Holding Date"
+                          type="date"
+                          value={this.state.Date}
+                          defaultValue="2021-01-31"
+                          onChange={this.handleTextFieldChange}
+                          className={classes.textField}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                    <div>
+                    <Button variant="outlined" className={classes.outlinedButtom} onClick={() => this.handleSubmit()}>
+                      Submit
+                    </Button>
+                  </div>
+                  </form>
+                  </Paper>
+              </Grid>
+              
+              <Grid item xs={12} md={4}>
                 <Paper className={classes.paper} style={{position: 'relative'}}>
                 
                 <div className={classes.box}>
@@ -271,30 +330,23 @@ class Dashboard_update extends Component {
                       Portfolio Allocation
                     </Typography>
                 </div>
-                
-                       
                       {/* <CircularProgress >  */}
                       <div className={loading_weight ? classes.loadingState : ''}>
-                      
                     <ComplexPieChart data={holdings}/>
-                    
-                
-                    
                     </div>
-                    
                 </Paper>
               </Grid> 
+              </Grid>
+              <Grid container spacing={24} justify="center">
               <Grid item xs={12} md={4}>
-                  <Paper className={classes.paper} style={{position: 'relative'}}>
+              <Paper className={classes.paper} style={{position: 'relative'}}>
                   <Typography style={{textTransform: 'uppercase'}} color='secondary' gutterBottom>
                       Portfolio Allocation
                     </Typography>
                         <SimpleTable rows={tableFormatted} />
                   </Paper>
               </Grid>
-              </Grid>
-              <Grid container spacing={24} justify="center">
-                <Grid item xs={12}>
+                <Grid item xs={12} md={8}>
                   <Paper className={classes.paper} style={{position: 'relative'}}>
                   <Typography style={{textTransform: 'uppercase'}} color='secondary' gutterBottom>
                       Portfolio Historical Performance
