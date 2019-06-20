@@ -37,19 +37,14 @@ function SimpleTable(props) {
         </TableHead>
         <TableBody>
           {rows.map(row => 
-             (
-            <TableRow key={row.ticker}>
+             (<TableRow key={row.ticker}>
               <TableCell component="th" scope="row">
                 {row.ticker}
               </TableCell>
               <TableCell key={row.weight} align="right">{numeral(row.weight).format('0.0%')}</TableCell>
-            </TableRow> 
-             ))}
-             
+            </TableRow> ))}
         </TableBody>
       </Table>
-    </Paper>
-  );
-}
+    </Paper>)}
 
 export default withTheme((SimpleTable));

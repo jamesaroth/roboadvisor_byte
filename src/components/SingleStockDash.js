@@ -39,19 +39,16 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       width: 'calc(100% - 20px)'
     },
-    
   },
   loadingState: {
     opacity: 0.05
-  },
+  },  
   paper: {
     padding: theme.spacing(3),
     textAlign: 'left',
     color: theme.palette.text.secondary,
     margin: theme.spacing(.25),
     flexGrow: 1,
-
-
   },
   rangeLabel: {
     display: 'flex',
@@ -122,10 +119,9 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-  }
-});
+  }});
 
-const endpoint = 'http://0.0.0.0:5000/weights/optimize'
+const endpoint = 'http://0.0.0.0:5000/optimized/personal/holding'
 const chart_endpoint = 'http://localhost:5000/allocated/chart'
 
 class Dashboard_update extends Component {
@@ -140,12 +136,11 @@ class Dashboard_update extends Component {
     holdings: [],
     StockTicker: "",
     ShareAmt: "",
-    Date: "",
-  };
+    Date: ""};
 
   async updateTableValues() {
-    const { amount } = this.state;
-    let params = {'vol': Number(amount)}
+    const { amount, StockTicker } = this.state;
+    let params = {'vol': Number(amount), 'ticker': StockTicker}
     const promise = fetch(endpoint, {
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(params),
@@ -160,13 +155,13 @@ class Dashboard_update extends Component {
       await fetch(chart_endpoint).then(blob => blob.json()).then(json => {
       this.setState({data: json, loading_chart: false, refresh_chart: false})
     })
+
   }
 
   reformatData = (data) => {
     const copy = data
       let i = 0
       for (i in copy) {
-        delete copy[i].daily_return
         copy[i].date = moment(copy[i].date).format("MMM-YYYY")
       }
     return copy
@@ -177,7 +172,7 @@ class Dashboard_update extends Component {
         for (let i in copy) {
             for (let key in copy[i]) {
                 if ((copy[i][key] < 0.01)) {
-                    copy.splice(i,1)
+                    copy.splice(i, 1)
                 }
             }
         }
@@ -206,7 +201,6 @@ class Dashboard_update extends Component {
   handleSubmit = (event) => {
     this.updateChartValues();
     this.updateTableValues();
-    
   }
 
   render() {
