@@ -49,9 +49,6 @@ const styles = theme => ({
     color: theme.palette.text.secondary,
     margin: theme.spacing(.25),
     flexGrow: 1,
-    
-
-
   },
   rangeLabel: {
     display: 'flex',
@@ -117,7 +114,7 @@ const styles = theme => ({
   }
 });
 
-const endpoint = 'http://0.0.0.0:5000/weights/optimize'
+const endpoint = 'http://0.0.0.0:5000/faster/optimized/weights'
 const chart_endpoint = 'http://localhost:5000/allocated/chart'
 
 class Dashboard_update extends Component {
@@ -151,6 +148,10 @@ class Dashboard_update extends Component {
     })
   }
 
+  shouldComponentUpdate(nextState) {
+    return nextState.holdings !== this.state.holdings || nextState.data !== this.state.data
+  }
+
   reformatData = (data) => {
     const copy = data
       let i = 0
@@ -165,6 +166,7 @@ class Dashboard_update extends Component {
       const copy = data
         for (let i in copy) {
             for (let key in copy[i]) {
+                console.log(copy[i][key])
                 if ((copy[i][key] < 0.01)) {
                     copy.splice(i,1)
                 }
@@ -180,8 +182,11 @@ class Dashboard_update extends Component {
   // }
   
   componentDidMount() {
+    this.updateChartValues();
     this.updateTableValues();
-    this.updateChartValues(); 
+  }
+
+  componentDidUpdate() {
   }
 
   handleChangeAmount = (event, value) => {
@@ -198,7 +203,9 @@ class Dashboard_update extends Component {
 
     dataFormatted = this.reformatData(data)
     tableFormatted = this.reformatTable(holdings)
-    console.log(this.state.data)
+    console.log(tableFormatted)
+    console.log(holdings)
+
     return (
       <React.Fragment>
         <CssBaseline />

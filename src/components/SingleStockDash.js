@@ -121,7 +121,7 @@ const styles = theme => ({
     flexWrap: 'wrap',
   }});
 
-const endpoint = 'http://0.0.0.0:5000/optimized/personal/holding'
+const endpoint = 'http://0.0.0.0:5000/faster/personal/optimized/weights'
 const chart_endpoint = 'http://localhost:5000/allocated/chart'
 
 class Dashboard_update extends Component {
@@ -211,6 +211,10 @@ class Dashboard_update extends Component {
     let tableFormatted = []
     dataFormatted = this.reformatData(data)
     tableFormatted = this.reformatTable(holdings)
+
+    console.log(holdings)
+    console.log(tableFormatted)
+    
 
     return (
       <React.Fragment>
@@ -326,7 +330,7 @@ class Dashboard_update extends Component {
                 </div>
                       {/* <CircularProgress >  */}
                       <div className={loading_weight ? classes.loadingState : ''}>
-                    <ComplexPieChart data={holdings}/>
+                    <ComplexPieChart data={tableFormatted}/>
                     </div>
                 </Paper>
               </Grid> 

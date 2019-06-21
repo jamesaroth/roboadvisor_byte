@@ -30,6 +30,7 @@ const renderActiveShape = (props) => {
         startAngle={startAngle}
         endAngle={endAngle}
         fill={fill} />
+      
       <Sector
         cx={cx}
         cy={cy}
@@ -43,7 +44,7 @@ const renderActiveShape = (props) => {
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{payload.ticker}</text>
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-        {`${(percent * 100).toFixed(1)}%`}
+        {`${(payload.weight * 100).toFixed(1)}%`}
       </text>
     </g>
   );
@@ -72,14 +73,15 @@ class ComplexPieChart extends Component {
   }
 
   render() {
+    console.log(this.props)
     const { theme, data } = this.props
     const { activeIndex, activeShape } = this.state;
-    
+    console.log(data)
     return (
       <ResponsiveContainer width="99%" height={220}>
       <PieChart>
         <Pie
-          activeIndex={activeIndex}
+          activeIndex={this.state.activeIndex}
           activeShape={renderActiveShape}
           data={data}
           cx="50%"
