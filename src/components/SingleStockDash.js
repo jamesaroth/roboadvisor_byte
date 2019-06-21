@@ -199,8 +199,8 @@ class Dashboard_update extends Component {
   }
 
   handleSubmit = (event) => {
-    this.updateChartValues();
     this.updateTableValues();
+    this.updateChartValues();
   }
 
   render() {
